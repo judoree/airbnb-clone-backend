@@ -16,8 +16,6 @@ class User(AbstractUser):
         WON = "won", "Korean Won"
         USD = "usd", "Dollar"
 
-    # 첫번째 값은 db 에 값이고 그 다음은 admin 페이제 볼 label
-
     first_name = models.CharField(
         max_length=150,
         editable=False,
