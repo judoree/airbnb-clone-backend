@@ -3,6 +3,21 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
+
+    class GenderChoices(models.TextChoices):
+        MALE = ("male", "Male")
+        FEMALE = ("female", "Female")
+
+    class LanguageChoices(models.TextChoices):
+        KR = ("kr", "Korean")
+        EN = ("en", "English")
+
+    class CurrencyChoices(models.TextChoices):
+        WON = "won", "Korean Won"
+        USD = "usd", "Dollar"
+
+    # 첫번째 값은 db 에 값이고 그 다음은 admin 페이제 볼 label
+
     first_name = models.CharField(
         max_length=150,
         editable=False,
@@ -11,8 +26,24 @@ class User(AbstractUser):
         max_length=150,
         editable=False,
     )
+    avatar = models.ImageField(
+        blank=True,
+    )
     name = models.CharField(
         default="",
         max_length=150,
     )
-    is_host = models.BooleanField(default=False)
+    is_host = models.BooleanField(null=True)
+    gender = models.CharField(
+        max_length=10,
+        choices=GenderChoices.choices,
+    )
+    language = models.CharField(
+        max_length=2,
+        choices=LanguageChoices.choices,
+    )
+
+    currency = models.CharField(
+        max_length=5,
+        choices=CurrencyChoices.choices,
+    )
