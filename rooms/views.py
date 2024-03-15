@@ -26,12 +26,31 @@ class Amenities(APIView):
 
 
 class AmenityDetail(APIView):
+    def get_objects(self, pk):
+        try:
+            return Amenity.objects.get(pk=pk)
+        except Amenity.DoesNotExist:
+            raise NotFound
 
     def get(self, request, pk):
-        pass
+        amenity = self.get_objects(pk)
+        serializer = AmenitySerializer(amenity)
+        return Response(serializer.data)
 
     def put(self, request, pk):
-        pass
+        amenity = self.get_objects(pk)
+        serializer = AmenitySerializer(
+            amenity,
+            data=request.data,
+            partial=True,
+        )
+        if serializer.is_valid():
+            update_amenity = serializer.save()
+            return Response(AmenitySerializer(update_amenity).data)
+        else:
+            return Response(serializer.errors)
 
     def delete(self, request, pk):
-        pass
+        amenity = self.get_objects(pk)
+        amenity.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
