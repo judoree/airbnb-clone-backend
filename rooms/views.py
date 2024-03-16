@@ -3,9 +3,7 @@ from rest_framework.status import HTTP_204_NO_CONTENT
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from .models import Amenity, Room
-from .serializers import AmenitySerializer, RoomSerializer
-
-# 첫번쨰로 할일 views 에 API 생성
+from .serializers import AmenitySerializer, RoomListSerializer, RoomDetailSerializer
 
 
 class Amenities(APIView):
@@ -59,5 +57,18 @@ class AmenityDetail(APIView):
 class Rooms(APIView):
     def get(self, request):
         all_rooms = Room.objects.all()
-        serialzer = RoomSerializer(all_rooms, many=True)
-        return Response(serialzer.data)
+        serializer = RoomListSerializer(all_rooms, many=True)
+        return Response(serializer.data)
+
+
+class RoomDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return Room.objects.get(pk=pk)
+        except Room.DoesNotExist:
+            raise NotFound
+
+    def get(self, request, pk):
+        room = self.get_object(pk)
+        serializer = RoomDetailSerializer(room)
+        return Response(serializer.data)
