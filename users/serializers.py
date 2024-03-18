@@ -10,6 +10,3 @@ class TinyUserSerializer(ModelSerializer):
             "avatar",
             "username",
         )
-
-
-# TinyUserSerializer 만들고
