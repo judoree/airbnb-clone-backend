@@ -23,7 +23,7 @@ from bookings.serializers import PublicBookingSerializer, CreateRoomBookingSeria
 class Amenities(APIView):
     def get(self, request):
         all_amenities = Amenity.objects.all()
-        serializer = serializers(all_amenities, many=True)
+        serializer = serializers.AmenitySerializer(all_amenities, many=True)
         return Response(serializer.data)
 
     def post(self, request):
