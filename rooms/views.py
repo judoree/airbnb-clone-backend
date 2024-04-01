@@ -63,7 +63,10 @@ class AmenityDetail(APIView):
             update_amenity = serializer.save()
             return Response(serializers.AmenitySerializer(update_amenity).data)
         else:
-            return Response(serializer.errors)
+            return Response(
+                serializer.errors,
+                status=HTTP_400_BAD_REQUEST,
+            )
 
     def delete(self, request, pk):
         amenity = self.get_objects(pk)
