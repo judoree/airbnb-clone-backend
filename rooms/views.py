@@ -1,3 +1,4 @@
+import time
 from django.conf import settings
 from django.utils import timezone
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -131,6 +132,7 @@ class RoomDetail(APIView):
             raise NotFound
 
     def get(self, request, pk):
+        time.sleep(1)
         room = self.get_object(pk)
         serializer = serializers.RoomDetailSerializer(
             room,
