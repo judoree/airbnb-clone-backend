@@ -172,3 +172,7 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000"]
 
 CORS_ALLOW_CREDENTIALS = True
+
+# CSRF 공격 방어 코드
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"]
+# post 요청을 보낼수 있는 웹사이트는 http://127.0.0.1:3000 이거뿐이라고 setting code
